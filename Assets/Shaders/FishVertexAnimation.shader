@@ -9,6 +9,16 @@ Shader "Custom/FishVertexAnimation"
         _Scale("Scale", Range(0, 1)) = 0.8
         _Yaw("Yaw", Float) = 0.2
         _Roll("Roll", Float) = 0.2
+
+        _EffectRadius("Wave Effect Radius",Range(0.0,1.0)) = 0.5
+        _WaveSpeed("Wave Speed", Range(0.0,100.0)) = 3.0
+        _WaveHeight("Wave Height", Range(0.0,30.0)) = 5.0
+        _WaveDensity("Wave Density", Range(0.0001,1.0)) = 0.007
+        _Yoffset("Y Offset",Float) = 0.0
+        _Threshold("Threshold",Range(0,30)) = 3 
+        _StrideSpeed("Stride Speed",Range(0.0,10.0)) = 2.0
+        _StrideStrength("Stride Strength", Range(0.0,20.0)) = 3.0
+        _MoveOffset("Move Offset",Float) = 0.0
     }
 
     SubShader
@@ -23,6 +33,10 @@ Shader "Custom/FishVertexAnimation"
             #pragma fragment frag
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+
+            //#pragma multi_compile_fog
+            //#include "UnityCG.cginc"
 
             struct VertexInput
             {
@@ -48,10 +62,21 @@ Shader "Custom/FishVertexAnimation"
             float _Yaw;
             float _Roll;
 
+            half _EffectRadius;
+            half _WaveSpeed;
+            half _WaveHeight;
+            half _WaveDensity;
+            half _Yoffset;
+            int _Threshold;
+            half _StrideSpeed;
+            half _StrideStrength;
+            half _MoveOffset;
+
             CBUFFER_END
 
             VertexOutput vert(VertexInput IN)
             {
+                
                 VertexOutput OUT;
 
                 OUT.positionCS = TransformObjectToHClip(IN.positionOS.xyz
@@ -61,9 +86,22 @@ Shader "Custom/FishVertexAnimation"
                     * float3(1, 0, 0)));
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
 
-                //OUT.positionCS += sin(2.0);
-
                 return OUT;
+                
+
+                /*
+                VertexOutput OUT;
+                half sinUse = sin(-_Time.w * _WaveSpeed + _MoveOffset + IN.positionOS.y * _WaveDensity);
+                half yValue = IN.positionOS.y - _Yoffset;
+                half yDirScaling = clamp(pow(yValue * _EffectRadius,_Threshold),0.0,1.0);
+                IN.positionOS.x = IN.positionOS.x + sinUse * _WaveHeight* yDirScaling;
+                IN.positionOS.x = IN.positionOS.x + sin(-_Time.w * _StrideSpeed + _MoveOffset) * _StrideStrength;
+                OUT.positionCS = UnityObjectToClipPos(IN.positionOS);
+                OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
+                UNITY_TRANSFER_FOG(OUT,OUT.positionCS);
+                return OUT;
+                */
+
             }
 
             half4 frag(VertexOutput IN) : SV_Target
