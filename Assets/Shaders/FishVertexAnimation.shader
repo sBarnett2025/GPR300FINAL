@@ -19,6 +19,13 @@ Shader "Custom/FishVertexAnimation"
         _StrideSpeed("Stride Speed",Range(0.0,10.0)) = 2.0
         _StrideStrength("Stride Strength", Range(0.0,20.0)) = 3.0
         _MoveOffset("Move Offset",Float) = 0.0
+
+        _TranslationAmount("Translation amount", float) = 1
+        _DisplacementAmount("Displacement amount", float) = 1
+        _DisplacementSpeed("Displacement speed", float) = 1
+        _MaskOffset("Mask offset", Range(0, 1)) = 0
+
+
     }
 
     SubShader
@@ -33,10 +40,6 @@ Shader "Custom/FishVertexAnimation"
             #pragma fragment frag
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-
-
-            //#pragma multi_compile_fog
-            //#include "UnityCG.cginc"
 
             struct VertexInput
             {
@@ -72,13 +75,23 @@ Shader "Custom/FishVertexAnimation"
             half _StrideStrength;
             half _MoveOffset;
 
+
+            float _MaskOffset;
+            float _TranslationAmount;
+            float _DisplacementAmount;
+            float _DisplacementSpeed;
+
+
+
             CBUFFER_END
 
             VertexOutput vert(VertexInput IN)
             {
                 
+                
+                // https://halisavakis.com/my-take-on-shaders-butterflies-and-fish-shader/
                 VertexOutput OUT;
-
+                float mask = saturate(sin((IN.uv.x + _MaskOffset) * 3.1415f));
                 OUT.positionCS = TransformObjectToHClip(IN.positionOS.xyz
                     += ((sin(((_Time.w * _AnimationSpeed)
                     + (IN.positionOS.z * _Yaw)
@@ -90,6 +103,7 @@ Shader "Custom/FishVertexAnimation"
                 
 
                 /*
+                // https://www.bitshiftprogrammer.com/2018/01/how-to-animate-fish-swimming-with.html
                 VertexOutput OUT;
                 half sinUse = sin(-_Time.w * _WaveSpeed + _MoveOffset + IN.positionOS.y * _WaveDensity);
                 half yValue = IN.positionOS.y - _Yoffset;
@@ -99,6 +113,17 @@ Shader "Custom/FishVertexAnimation"
                 OUT.positionCS = UnityObjectToClipPos(IN.positionOS);
                 OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
                 UNITY_TRANSFER_FOG(OUT,OUT.positionCS);
+                return OUT;
+                */
+
+                /*
+                // https://halisavakis.com/my-take-on-shaders-butterflies-and-fish-shader/
+                VertexOutput OUT;
+                float mask = saturate(sin((IN.uv.x + _MaskOffset) * 3.1415f));
+                IN.positionOS.x += sin(_Time.y * _DisplacementSpeed) * _TranslationAmount;
+                IN.positionOS.x += sin(IN.uv.x * 3.1415f + _Time.y * _DisplacementSpeed) * _DisplacementAmount * mask;
+                OUT.positionCS = TransformObjectToHClip(IN.positionOS);
+                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
                 return OUT;
                 */
 
