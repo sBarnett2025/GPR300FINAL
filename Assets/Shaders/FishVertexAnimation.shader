@@ -10,6 +10,9 @@ Shader "Custom/FishVertexAnimation"
         _Yaw("Yaw", Float) = 0.2
         _Roll("Roll", Float) = 0.2
 
+        _MaskOffset("Mask offset", Range(0, 1)) = 0
+
+        /*
         _EffectRadius("Wave Effect Radius",Range(0.0,1.0)) = 0.5
         _WaveSpeed("Wave Speed", Range(0.0,100.0)) = 3.0
         _WaveHeight("Wave Height", Range(0.0,30.0)) = 5.0
@@ -23,7 +26,8 @@ Shader "Custom/FishVertexAnimation"
         _TranslationAmount("Translation amount", float) = 1
         _DisplacementAmount("Displacement amount", float) = 1
         _DisplacementSpeed("Displacement speed", float) = 1
-        _MaskOffset("Mask offset", Range(0, 1)) = 0
+        
+        */
 
 
     }
@@ -65,6 +69,9 @@ Shader "Custom/FishVertexAnimation"
             float _Yaw;
             float _Roll;
 
+            float _MaskOffset;
+
+            /*
             half _EffectRadius;
             half _WaveSpeed;
             half _WaveHeight;
@@ -76,11 +83,11 @@ Shader "Custom/FishVertexAnimation"
             half _MoveOffset;
 
 
-            float _MaskOffset;
+            
             float _TranslationAmount;
             float _DisplacementAmount;
             float _DisplacementSpeed;
-
+            */
 
 
             CBUFFER_END
@@ -90,13 +97,15 @@ Shader "Custom/FishVertexAnimation"
                 
                 
                 // https://halisavakis.com/my-take-on-shaders-butterflies-and-fish-shader/
+
+
                 VertexOutput OUT;
-                float mask = saturate(sin((IN.uv.x + _MaskOffset) * 3.1415f));
+                float mask = saturate(sin((IN.positionOS.z + _MaskOffset) * 3.1415f));
                 OUT.positionCS = TransformObjectToHClip(IN.positionOS.xyz
                     += ((sin(((_Time.w * _AnimationSpeed)
                     + (IN.positionOS.z * _Yaw)
                     + (IN.positionOS.y * _Roll))) * _Scale)
-                    * float3(1, 0, 0)));
+                    * float3(1, 0, 0)*mask));
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
 
                 return OUT;
