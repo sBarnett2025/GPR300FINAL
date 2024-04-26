@@ -43,6 +43,8 @@ Material:
     m_Floats:
     - _FPS: 30
     - _Height: 8
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _Width: 4
     m_Colors: []
   m_BuildTextureStacks: []
