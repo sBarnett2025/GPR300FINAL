@@ -16,8 +16,9 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -25,6 +26,10 @@ Material:
     m_TexEnvs:
     - _Caustic:
         m_Texture: {fileID: 2800000, guid: 959840cbba4a4a54894d86ee69c56b49, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Underneath:
+        m_Texture: {fileID: 2800000, guid: 163eef5724e472548ac692d603024d3e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -41,14 +46,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Blend: 2
+    - _CastShadows: 1
+    - _Cull: 2
+    - _DstBlend: 0
     - _FPS: 30
     - _Height: 8
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _SrcBlend: 1
     - _Streangth: 0.5
+    - _Strength: 0.5
+    - _Surface: 0
     - _Width: 4
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
-    - _Base_Color: {r: 0.06666667, g: 0.33333334, b: 0.83137256, a: 0.32156864}
+    - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &3763991324679588182
 MonoBehaviour:
