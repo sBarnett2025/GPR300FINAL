@@ -94,10 +94,7 @@ Shader "Custom/FishVertexAnimation"
 
             VertexOutput vert(VertexInput IN)
             {
-                
-                
                 // https://halisavakis.com/my-take-on-shaders-butterflies-and-fish-shader/
-
 
                 VertexOutput OUT;
                 float mask = saturate(sin((IN.positionOS.z + _MaskOffset) * 3.1415f));
@@ -109,33 +106,6 @@ Shader "Custom/FishVertexAnimation"
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
 
                 return OUT;
-                
-
-                /*
-                // https://www.bitshiftprogrammer.com/2018/01/how-to-animate-fish-swimming-with.html
-                VertexOutput OUT;
-                half sinUse = sin(-_Time.w * _WaveSpeed + _MoveOffset + IN.positionOS.y * _WaveDensity);
-                half yValue = IN.positionOS.y - _Yoffset;
-                half yDirScaling = clamp(pow(yValue * _EffectRadius,_Threshold),0.0,1.0);
-                IN.positionOS.x = IN.positionOS.x + sinUse * _WaveHeight* yDirScaling;
-                IN.positionOS.x = IN.positionOS.x + sin(-_Time.w * _StrideSpeed + _MoveOffset) * _StrideStrength;
-                OUT.positionCS = UnityObjectToClipPos(IN.positionOS);
-                OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
-                UNITY_TRANSFER_FOG(OUT,OUT.positionCS);
-                return OUT;
-                */
-
-                /*
-                // https://halisavakis.com/my-take-on-shaders-butterflies-and-fish-shader/
-                VertexOutput OUT;
-                float mask = saturate(sin((IN.uv.x + _MaskOffset) * 3.1415f));
-                IN.positionOS.x += sin(_Time.y * _DisplacementSpeed) * _TranslationAmount;
-                IN.positionOS.x += sin(IN.uv.x * 3.1415f + _Time.y * _DisplacementSpeed) * _DisplacementAmount * mask;
-                OUT.positionCS = TransformObjectToHClip(IN.positionOS);
-                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
-                return OUT;
-                */
-
             }
 
             half4 frag(VertexOutput IN) : SV_Target
