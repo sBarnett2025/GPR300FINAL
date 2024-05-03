@@ -117,10 +117,10 @@ Material:
     - _NoiseScale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Pitch: 1.1
+    - _Pitch: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Roll: 1.07
+    - _Roll: 1
     - _Scale: 0.144
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -137,7 +137,7 @@ Material:
     - _WaveSpeed: 3
     - _WaveStrength: 0.1
     - _WorkflowMode: 1
-    - _Yaw: 1.68
+    - _Yaw: 1
     - _Yoffset: 0
     - _ZWrite: 1
     m_Colors:

@@ -50,7 +50,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Depth: 0.37
-    - _DepthGradentStreangth: 1
+    - _DepthGradentStreangth: 0.39
     - _Displacement: 0.3
     - _NormalStreangth: 0.715
     - _QueueControl: 0
