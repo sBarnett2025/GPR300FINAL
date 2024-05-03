@@ -33,7 +33,7 @@ public class FishMove : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
 
         // If the fish reaches the target position, set a new target position
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        if (Vector3.Distance(transform.position, targetPosition) < 0.8f)
         {
             SetNewTargetPosition();
         }

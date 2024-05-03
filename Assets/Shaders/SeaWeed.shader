@@ -63,20 +63,6 @@ Shader "Custom/SeaWeed"
 
             VertexOutput vert(VertexInput IN)
             {
-                /*
-                Varyings output;
-                output.uv_MainTex = TRANSFORM_TEX(input.uv_MainTex, _MainTex);
-                float2 uv = input.uv_MainTex * _NoiseScale;
-                uv += float2(_Time.y * _NoiseSpeed, _Time.x * _NoiseSpeed);
-                float noise = tex2D(_MainTex, uv).r;
-                float3 offset = float3(0, noise * _DisplacementStrength, 0);
-                output.worldPos = UnityObjectToWorldPos(input.uv_MainTex) + output.worldNormal * offset.y;
-                output.worldNormal = UnityObjectToWorldNormal(offset);
-                return output;
-                */
-                 
-                // scroll perlin noise to generate
-                float noise = tex2Dlod(sampler_PerlinTexture, float4(IN.positionOS.xz+ sin(_Time.w), 0.0, 0.0)).r;
 
                 VertexOutput OUT;
                 OUT.positionCS = TransformObjectToHClip(IN.positionOS.xyz
@@ -87,20 +73,6 @@ Shader "Custom/SeaWeed"
                     * float3(1, 0, 1)));
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
 
-                /*
-                VertexOutput OUT;
-                float mask = saturate(sin((IN.positionOS.x + _MaskOffset) * 3.1415f));
-                float maskTwo = saturate(sin((IN.positionOS.y + _MaskOffset) * 3.1415f));
-                float maskThree = saturate(sin((IN.positionOS.z + _MaskOffset) * 3.1415f));
-
-                OUT.positionCS = TransformObjectToHClip(IN.positionOS.xyz
-                    += ((sin(((_Time.w * _AnimationSpeed)
-                    + (IN.positionOS.x * _Yaw)
-                    + (IN.positionOS.y * _Roll)
-                    + (IN.positionOS.z * _Pitch))) * _Scale)
-                    * float3(1, 1, 1)));
-                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
-                */
                 return OUT;
                 
             }
