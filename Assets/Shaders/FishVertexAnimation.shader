@@ -1,3 +1,4 @@
+// DONE BY SAMUEL BARNETT
 Shader "Custom/FishVertexAnimation"
 {
     Properties

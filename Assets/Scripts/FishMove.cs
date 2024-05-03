@@ -1,17 +1,18 @@
+// DONE BY SAMUEL BARNETT
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FishMove : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Speed of the fish movement
-    public float rotationSpeed = 2f; // Speed of the fish rotation
-    public float minX = -10f; // Minimum X position of the fish's movement area
-    public float maxX = 10f; // Maximum X position of the fish's movement area
-    public float minY = -10f; // Minimum Y position of the fish's movement area
-    public float maxY = 10f; // Maximum Y position of the fish's movement area
-    public float minZ = -10f; // Minimum Z position of the fish's movement area
-    public float maxZ = 10f; // Maximum Z position of the fish's movement area
+    public float moveSpeed = 5f; 
+    public float rotationSpeed = 2f;
+    public float minX = -10f; 
+    public float maxX = 10f; 
+    public float minY = -10f;
+    public float maxY = 10f; 
+    public float minZ = -10f;
+    public float maxZ = 10f; 
 
     private Vector3 targetPosition;
 
